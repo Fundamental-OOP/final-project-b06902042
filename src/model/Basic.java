@@ -6,9 +6,16 @@ public class Basic extends Gem {
     public Basic() {
         setColour();
     }
-
+    public void setColour(Colour color){
+        this.colour = color;
+        setImagePath();
+    }
     public void setColour() {
         this.colour = Colour.values()[new Random().nextInt(7)];
+        setImagePath();
+    }
+
+    private void setImagePath(){
         switch (this.colour) {
             case BLUE:
                 this.imagePath = "Images/Blue/jewel.gif";
@@ -33,7 +40,6 @@ public class Basic extends Gem {
                 break;
         }
     }
-
     @Override
     public ArrayList<ArrayList<Integer>> useEffect() {
         return new ArrayList<ArrayList<Integer>>();
