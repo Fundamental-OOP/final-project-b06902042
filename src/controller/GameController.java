@@ -44,6 +44,7 @@ public class GameController {
 		gameTask2 = gameExecutor2.submit(new Runnable() {
 			public void run() {
 				board.clearGrid(a, b);
+				board.dealMyTimer();
 				board.refillGrid();
 			}
 		});
@@ -53,7 +54,7 @@ public class GameController {
 		return board.getRemoveFlag(x, y);
 	}
 
-	public void repaintBoard() {
-		gameView.repaintBoard();
+	public void repaintBoard(int size) {
+		gameView.repaintBoard(size);
 	}
 }

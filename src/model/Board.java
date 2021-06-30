@@ -78,7 +78,10 @@ public class Board {
         if (!aMatch && !bMatch) {
             swap(a, b);
         }
-        gameController.repaintBoard();
+        gameController.repaintBoard(1);
+    }
+    public void dealMyTimer(){
+        MyTimer timer = new MyTimer(gameController);
     }
 
     public void refillGrid() {
