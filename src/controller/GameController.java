@@ -45,6 +45,12 @@ public class GameController {
 			public void run() {
 				board.clearGrid(a, b);
 				board.dealMyTimer();
+				try {
+					Thread.sleep(700);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				board.refillGrid();
 			}
 		});

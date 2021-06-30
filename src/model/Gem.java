@@ -44,7 +44,7 @@ public abstract class Gem {
     }
 
     public abstract void setColour();
-
+    public abstract void setColour(Colour color);
     public abstract ArrayList<ArrayList<Integer>> useEffect();
 
     public Colour getColour() {

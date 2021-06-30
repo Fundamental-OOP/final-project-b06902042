@@ -73,27 +73,79 @@ public class Board {
     }
 
     public void clearGrid(Gem a, Gem b) {
+        try {
+            Thread.sleep(200); // delays 1 second
+        } catch (InterruptedException e) {
+        }
         boolean aMatch = clearMatch(a.getMyX(), a.getMyY());
         boolean bMatch = clearMatch(b.getMyX(), b.getMyY());
         if (!aMatch && !bMatch) {
             swap(a, b);
         }
         gameController.repaintBoard(1);
+        try {
+            Thread.sleep(200); // delays 1 second
+        } catch (InterruptedException e) {
+        }
     }
     public void dealMyTimer(){
         MyTimer timer = new MyTimer(gameController);
     }
+    
 
     public void refillGrid() {
-        // for (Gem gem : clearList) {
-        // gem.setRemoveFlag(false);
-        // }
+        for (Gem gem : clearList) {
+            gem.setRemoveFlag(false);
+            int x = gem.getMyX();
+            for(int i = gem.getMyY();i > 0;i--){
+                grid[x][i].setColour(grid[x][i-1].getColour());
+                imagePath[x][i] = grid[x][i].getImagePath();
+            }
+            grid[x][0].setColour();
+            imagePath[x][0] = grid[x][0].getImagePath();
+            
+        }
         clearList.removeAll(clearList);
+        gameController.repaintBoard(1);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+        }
+        autoCrush();
+    }
+
+    private void autoCrush(){
+        for(int i = 0;i < boardSize;i++){
+            for(int j = 0;j < boardSize;j++){
+                if(checkGem(i, j)){
+                    clearMatch(i, j);
+                }
+            }
+        }
+        if(clearList.isEmpty()){
+            return;
+        }
+        dealMyTimer();
+        try {
+            Thread.sleep(700); // delays 1 second
+        } catch (InterruptedException e) {
+        }
+        gameController.repaintBoard(-9);
+        try {
+            Thread.sleep(200); // delays 1 second
+        } catch (InterruptedException e) {
+        }
+        refillGrid();
+    }
+
+    private boolean checkGem(int x, int y){
+        if(clearList.indexOf(grid[x][y]) != -1) return false;
+        return true;
     }
 
     private boolean clearMatch(int x, int y) {
         Colour colour = grid[x][y].getColour();
-        System.out.println(colour);
+        //System.out.println(colour);
         int dx[] = { 0, 1, 0, -1 };
         int dy[] = { -1, 0, 1, 0 };
         int cnt[] = { 0, 0, 0, 0 };
@@ -115,53 +167,55 @@ public class Board {
         }
         ArrayList<Gem> clearListTmp = new ArrayList<>();
         Queue<Gem> effectListTmp = new LinkedList<>();
+        clearListTmp.add(grid[x][y]);
         if (cnt[0] + cnt[2] >= 2) {
-            clearListTmp.add(grid[x][y]);
             clearListTmp.addAll(gemList.get(0));
             clearListTmp.addAll(gemList.get(2));
-        } else if (cnt[1] + cnt[3] >= 2) {
-            clearListTmp.add(grid[x][y]);
+        } 
+        if (cnt[1] + cnt[3] >= 2) {
             clearListTmp.addAll(gemList.get(1));
-            clearListTmp.addAll(gemList.get(3));
-        } else if (cnt[0] + cnt[1] >= 4) {
-            clearListTmp.add(grid[x][y]);
-            clearListTmp.addAll(gemList.get(0));
-            clearListTmp.addAll(gemList.get(1));
-        } else if (cnt[0] + cnt[3] >= 4) {
-            clearListTmp.add(grid[x][y]);
-            clearListTmp.addAll(gemList.get(0));
-            clearListTmp.addAll(gemList.get(3));
-        } else if (cnt[1] + cnt[2] >= 4) {
-            clearListTmp.add(grid[x][y]);
-            clearListTmp.addAll(gemList.get(1));
-            clearListTmp.addAll(gemList.get(2));
-        } else if (cnt[2] + cnt[3] >= 4) {
-            clearListTmp.add(grid[x][y]);
-            clearListTmp.addAll(gemList.get(2));
             clearListTmp.addAll(gemList.get(3));
         }
-        if (clearListTmp.size() > 0) {
-            effectListTmp.addAll(clearListTmp);
-            while (!effectListTmp.isEmpty()) {
-                Gem gemPop = effectListTmp.poll();
-                ArrayList<ArrayList<Integer>> effectGems = gemPop.useEffect();
-                for (ArrayList<Integer> point : effectGems) {
-                    int popGemX = gemPop.getMyX() + point.get(0);
-                    int popGemY = gemPop.getMyY() + point.get(1);
-                    if (isValid(popGemX, popGemY)) {
-                        Gem effectGem = grid[popGemX][popGemY];
-                        if (!clearListTmp.contains(effectGem) && !clearList.contains(effectGem)) {
-                            effectListTmp.add(effectGem);
-                            clearListTmp.add(effectGem);
-                        }
-                    }
-                }
-            }
+        // else if (cnt[0] + cnt[1] >= 4) {
+        //     clearListTmp.add(grid[x][y]);
+        //     clearListTmp.addAll(gemList.get(0));
+        //     clearListTmp.addAll(gemList.get(1));
+        // } else if (cnt[0] + cnt[3] >= 4) {
+        //     clearListTmp.add(grid[x][y]);
+        //     clearListTmp.addAll(gemList.get(0));
+        //     clearListTmp.addAll(gemList.get(3));
+        // } else if (cnt[1] + cnt[2] >= 4) {
+        //     clearListTmp.add(grid[x][y]);
+        //     clearListTmp.addAll(gemList.get(1));
+        //     clearListTmp.addAll(gemList.get(2));
+        // } else if (cnt[2] + cnt[3] >= 4) {
+        //     clearListTmp.add(grid[x][y]);
+        //     clearListTmp.addAll(gemList.get(2));
+        //     clearListTmp.addAll(gemList.get(3));
+        // }
+        if (clearListTmp.size() > 1) {
+            // effectListTmp.addAll(clearListTmp);
+            // while (!effectListTmp.isEmpty()) {
+            //     Gem gemPop = effectListTmp.poll();
+            //     ArrayList<ArrayList<Integer>> effectGems = gemPop.useEffect();
+            //     for (ArrayList<Integer> point : effectGems) {
+            //         int popGemX = gemPop.getMyX() + point.get(0);
+            //         int popGemY = gemPop.getMyY() + point.get(1);
+            //         if (isValid(popGemX, popGemY)) {
+            //             Gem effectGem = grid[popGemX][popGemY];
+            //             if (!clearListTmp.contains(effectGem) && !clearList.contains(effectGem)) {
+            //                 effectListTmp.add(effectGem);
+            //                 clearListTmp.add(effectGem);
+            //             }
+            //         }
+            //     }
+            // }
+            
             for (Gem gem : clearListTmp) {
                 gem.setRemoveFlag(true);
             }
             clearList.addAll(clearListTmp);
-            effectList.addAll(effectListTmp);
+            //effectList.addAll(effectListTmp);
         } else {
             return false;
         }
