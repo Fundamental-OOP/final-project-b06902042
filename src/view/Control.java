@@ -74,17 +74,17 @@ public class Control extends JPanel implements ActionListener {
 
 	public void submitScore()
 	{
-		IO.openWriteFile("Highscore.txt");
 		String name = (String) JOptionPane.showInputDialog(null, "GAME OVER. \n You scored " + GameView.points + " points. \nSubmit your score into the leaderboard to compare with other players!\nEnter your name to submit your score:", 
 		"Submit Your Score", JOptionPane.PLAIN_MESSAGE, null, null, "John");	//opens dialog
 
 		if(name != null)
 		{
+			IO.openWriteFile("Highscore.txt");
 			IO.writeln(name);
 			IO.writeln(GameView.points + "");
+			IO.closeWriteFile();
 			new LeaderBoard();
 		}
-		IO.closeWriteFile();
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -94,7 +94,6 @@ public class Control extends JPanel implements ActionListener {
 			int prompt = JOptionPane.showOptionDialog(null,
 						"Are you sure you would like to return to the menu?\nYour current game will end.",
 						"Pause", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]); // confirms that user wants to return to menu
-			System.out.println(prompt);
 			if (prompt == 0) // if timer is not on, or if user said yes, then it will return to the menu
 			{ 
 				gameview.over(false);
