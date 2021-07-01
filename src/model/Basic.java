@@ -38,6 +38,9 @@ public class Basic extends Gem{
             case YELLOW:
                 this.imagePath = "Images/Yellow/jewel.gif";
                 break;
+            case CROSS:
+                this.imagePath = "Images/Cross/jewel.png";
+                break;
         }
     }
     @Override

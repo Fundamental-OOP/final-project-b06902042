@@ -61,7 +61,7 @@ public class GameView extends JFrame {
                 boardView.getY() + boardView.getHeight() + 7, 465, 26);
         container.add(timer.bar);
 
-        controlView = new Control();
+        controlView = new Control(this);
         controlView.setVisible(true);
         container.add(controlView);
 
@@ -78,12 +78,13 @@ public class GameView extends JFrame {
         timer.start();
     }
 
-    public void over() {
+    public void over(boolean submit) {
         Container container = getContentPane();
-        controlView.submitScore();
+        if(submit)
+            controlView.submitScore();
         container.removeAll();
         container.add(menuView);
-        new LeaderBoard();
+        points = 0;
         repaint();
     }
 

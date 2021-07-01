@@ -16,27 +16,27 @@ import model.IO;
  */
 public class Control extends JPanel implements ActionListener {
 	// private buttons and labels
-	private JButton menuButton;
-
+	private JButton pauseButton;
+	private GameView gameview;
 	private JLabel pointsLabel;
 
 	/**
 	 * Constructor method builds Control panel
 	 */
-	public Control() {
+	public Control(GameView gameView) {
 		super(); // calls super to construct as JPanel
-
+		this.gameview = gameView;
 		setLayout(null);
 		setBounds(0, 0, 300, 700);
 		setBackground(Color.BLACK);
 
-		menuButton = new JButton();
-		menuButton.setBounds(getX() + (getWidth() - 200) / 2, 330, 200, 63);
-		menuButton.setBackground(Color.BLACK);
-		menuButton.setBorder(null);
-		menuButton.setIcon(new ImageIcon("menu.gif"));
-		menuButton.addActionListener(this);
-		add(menuButton);
+		pauseButton = new JButton();
+		pauseButton.setBounds(getX() + (getWidth() - 100) / 2, 330, 100, 100);
+		pauseButton.setBackground(Color.BLACK);
+		pauseButton.setBorder(null);
+		pauseButton.setIcon(new ImageIcon("Images/icon/pause.jpg"));
+		pauseButton.addActionListener(this);
+		add(pauseButton);
 
 		// sets points label and border
 		pointsLabel = new JLabel(GameView.points + "");
@@ -82,22 +82,23 @@ public class Control extends JPanel implements ActionListener {
 		{
 			IO.writeln(name);
 			IO.writeln(GameView.points + "");
+			new LeaderBoard();
 		}
 		IO.closeWriteFile();
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == menuButton) {
-			int prompt = -1;
-			if (Timer.on) // if the timer is still on, then user will be prompted
-				prompt = JOptionPane.showConfirmDialog(null,
+		Object[] options = {"Restart", "Continue"};
+		if (e.getSource() == pauseButton) {
+			 // if the timer is still on, then user will be prompted
+			int prompt = JOptionPane.showOptionDialog(null,
 						"Are you sure you would like to return to the menu?\nYour current game will end.",
-						"Back to Menu", JOptionPane.YES_NO_OPTION); // confirms that user wants to return to menu
-			if (prompt == 0 || !Timer.on) // if timer is not on, or if user said yes, then it will return to the menu
-			{
-				Timer.on = false; // if player said yes, then timer will be turned off
-
-				new GameController(); // new game will be created
+						"Pause", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]); // confirms that user wants to return to menu
+			System.out.println(prompt);
+			if (prompt == 0) // if timer is not on, or if user said yes, then it will return to the menu
+			{ 
+				gameview.over(false);
+				Timer.on = false;
 			}
 
 			// else, nothing will happen, game will continue

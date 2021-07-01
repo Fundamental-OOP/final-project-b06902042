@@ -56,6 +56,24 @@ public class GameController {
 		});
 	}
 
+	public void performCross(Gem a){
+		if(gameTask2 != null){
+			gameTask2.cancel(true);
+		}
+		gameTask2 = gameExecutor2.submit(new Runnable(){
+			public void run(){
+				board.clearCross(a);
+				board.dealMyTimer();
+				try {
+					Thread.sleep(700);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				board.refillGrid();
+			}
+		});
+	}
 	public boolean getRemoveFlag(int x, int y) {
 		return board.getRemoveFlag(x, y);
 	}

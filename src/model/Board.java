@@ -19,10 +19,7 @@ public class Board {
         this.gameController = gameController;
         for (int x = 0; x < boardSize; x++) {
             for (int y = 0; y < boardSize; y++) {
-                if (x == 5 && y == 5)
-                    grid[x][y] = new Test();
-                else
-                    grid[x][y] = new Basic();
+                grid[x][y] = new Basic();
                 grid[x][y].setMyXY(x, y);
             }
         }
@@ -54,7 +51,13 @@ public class Board {
     }
 
     public void performClick(Gem source) {
-        if (firstPressed) {
+        if(source.getColour() == Colour.CROSS){
+            selected = source;
+            selected.setButtonBorder(true);
+            firstPressed = true;
+            this.gameController.performCross(selected);
+        }
+        else if (firstPressed) {
             selected = source;
             selected.setButtonBorder(true);
             firstPressed = false;
@@ -93,18 +96,50 @@ public class Board {
         MyTimer timer = new MyTimer(gameController);
     }
     
+    public void clearCross(Gem a){
+        try {
+            Thread.sleep(200); // delays 1 second
+        } catch (InterruptedException e) {
+        }
+        int x = a.getMyX();
+        int y = a.getMyY();
+        clearList.add(a);
+        for(int i = 0;i < boardSize;i++){
+            if(i != x){
+                clearList.add(grid[i][y]);
+            }
+            if(i != y){
+                clearList.add(grid[x][i]);
+            }
+        }
+        for(Gem gem: clearList){
+            gem.setRemoveFlag(true);
+        }
+        GameView.points += clearList.size() * 100;
+        gameController.updatePoint();
+        gameController.repaintBoard(1);
+        try {
+            Thread.sleep(200); // delays 1 second
+        } catch (InterruptedException e) {
+        }
+    }
 
     public void refillGrid() {
+        boolean cross = false;
         Collections.sort(clearList);
+        if(clearList.size() >= 5 && clearList.size() < 19) cross = true;
         for (Gem gem : clearList) {
-            System.out.println(gem.getMyY());
             gem.setRemoveFlag(false);
             int x = gem.getMyX();
             for(int i = gem.getMyY();i > 0;i--){
                 grid[x][i].setColour(grid[x][i-1].getColour());
                 imagePath[x][i] = grid[x][i].getImagePath();
             }
-            grid[x][0].setColour();
+            if(cross){
+                grid[x][0].setColour(Colour.CROSS);
+                cross = false;
+            }
+            else grid[x][0].setColour();
             imagePath[x][0] = grid[x][0].getImagePath();
             
         }
@@ -172,47 +207,30 @@ public class Board {
         Queue<Gem> effectListTmp = new LinkedList<>();
         clearListTmp.add(grid[x][y]);
         if (cnt[0] + cnt[2] >= 2) {
-            clearListTmp.addAll(gemList.get(0));
-            clearListTmp.addAll(gemList.get(2));
+            for(Gem g: gemList.get(0)){
+                if(clearListTmp.indexOf(g) == -1){
+                    clearListTmp.add(g);
+                }
+            }
+            for(Gem g: gemList.get(2)){
+                if(clearListTmp.indexOf(g) == -1){
+                    clearListTmp.add(g);
+                }
+            }
         } 
         if (cnt[1] + cnt[3] >= 2) {
-            clearListTmp.addAll(gemList.get(1));
-            clearListTmp.addAll(gemList.get(3));
+            for(Gem g: gemList.get(1)){
+                if(clearListTmp.indexOf(g) == -1){
+                    clearListTmp.add(g);
+                }
+            }
+            for(Gem g: gemList.get(3)){
+                if(clearListTmp.indexOf(g) == -1){
+                    clearListTmp.add(g);
+                }
+            }
         }
-        // else if (cnt[0] + cnt[1] >= 4) {
-        //     clearListTmp.add(grid[x][y]);
-        //     clearListTmp.addAll(gemList.get(0));
-        //     clearListTmp.addAll(gemList.get(1));
-        // } else if (cnt[0] + cnt[3] >= 4) {
-        //     clearListTmp.add(grid[x][y]);
-        //     clearListTmp.addAll(gemList.get(0));
-        //     clearListTmp.addAll(gemList.get(3));
-        // } else if (cnt[1] + cnt[2] >= 4) {
-        //     clearListTmp.add(grid[x][y]);
-        //     clearListTmp.addAll(gemList.get(1));
-        //     clearListTmp.addAll(gemList.get(2));
-        // } else if (cnt[2] + cnt[3] >= 4) {
-        //     clearListTmp.add(grid[x][y]);
-        //     clearListTmp.addAll(gemList.get(2));
-        //     clearListTmp.addAll(gemList.get(3));
-        // }
         if (clearListTmp.size() > 1) {
-            // effectListTmp.addAll(clearListTmp);
-            // while (!effectListTmp.isEmpty()) {
-            //     Gem gemPop = effectListTmp.poll();
-            //     ArrayList<ArrayList<Integer>> effectGems = gemPop.useEffect();
-            //     for (ArrayList<Integer> point : effectGems) {
-            //         int popGemX = gemPop.getMyX() + point.get(0);
-            //         int popGemY = gemPop.getMyY() + point.get(1);
-            //         if (isValid(popGemX, popGemY)) {
-            //             Gem effectGem = grid[popGemX][popGemY];
-            //             if (!clearListTmp.contains(effectGem) && !clearList.contains(effectGem)) {
-            //                 effectListTmp.add(effectGem);
-            //                 clearListTmp.add(effectGem);
-            //             }
-            //         }
-            //     }
-            // }
             
             for (Gem gem : clearListTmp) {
                 gem.setRemoveFlag(true);

@@ -4,7 +4,7 @@ import java.util.*;
 
 public abstract class Gem implements Comparable<Gem>{
     public enum Colour {
-        BLUE, GREEN, ORANGE, PURPLE, RED, WHITE, YELLOW
+        BLUE, GREEN, ORANGE, PURPLE, RED, WHITE, YELLOW, CROSS
     }
 
     private int X;

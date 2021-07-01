@@ -3,6 +3,8 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 
+import model.IO;
+
 import java.util.concurrent.*;
 
 public class Timer {
@@ -46,7 +48,7 @@ public class Timer {
 	public void start() {
 		if (gameTask != null)
 			gameTask.cancel(true);
-
+		
 		gameTask = gameExecutor.submit(new Runnable() {
 			public void run() {
 				gameView.countdown.setVisible(true); // the countdown becomes visible
@@ -92,7 +94,7 @@ public class Timer {
 
 				if (on) // if the boolean is still on when the while loop is over
 				{
-					gameView.over(); // game is over because the game was played until timer reached 0
+					gameView.over(true); // game is over because the game was played until timer reached 0
 					on = false; // otherwise, the user may have quit the game
 				}
 
