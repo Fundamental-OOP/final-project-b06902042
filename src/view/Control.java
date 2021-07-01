@@ -34,7 +34,7 @@ public class Control extends JPanel implements ActionListener {
 		pauseButton.setBounds(getX() + (getWidth() - 100) / 2, 330, 100, 100);
 		pauseButton.setBackground(Color.BLACK);
 		pauseButton.setBorder(null);
-		pauseButton.setIcon(new ImageIcon("Images/icon/pause.jpg"));
+		pauseButton.setIcon(new ImageIcon("Images/icon/restart.png"));
 		pauseButton.addActionListener(this);
 		add(pauseButton);
 
@@ -93,7 +93,7 @@ public class Control extends JPanel implements ActionListener {
 			 // if the timer is still on, then user will be prompted
 			int prompt = JOptionPane.showOptionDialog(null,
 						"Restart OR Continue",
-						"Pause", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]); // confirms that user wants to return to menu
+						"Restart", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]); // confirms that user wants to return to menu
 			if (prompt == 0) // if timer is not on, or if user said yes, then it will return to the menu
 			{ 
 				gameview.over(false);
