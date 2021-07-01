@@ -44,6 +44,13 @@ public class GameController {
 		gameTask2 = gameExecutor2.submit(new Runnable() {
 			public void run() {
 				board.clearGrid(a, b);
+				board.dealMyTimer();
+				try {
+					Thread.sleep(700);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				board.refillGrid();
 			}
 		});
@@ -53,8 +60,8 @@ public class GameController {
 		return board.getRemoveFlag(x, y);
 	}
 
-	public void repaintBoard() {
-		gameView.repaintBoard();
+	public void repaintBoard(int size) {
+		gameView.repaintBoard(size);
 	}
 
 	public void updatePoint(){

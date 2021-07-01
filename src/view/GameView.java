@@ -87,8 +87,8 @@ public class GameView extends JFrame {
         repaint();
     }
 
-    public void repaintBoard() {
-        boardView.repaintBoard();
+    public void repaintBoard(int size) {
+        boardView.repaintBoard(size);
     }
 
     public void updatePoint(){

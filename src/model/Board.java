@@ -83,12 +83,16 @@ public class Board {
         if (!aMatch && !bMatch) {
             swap(a, b);
         }
-        gameController.repaintBoard();
+        gameController.repaintBoard(1);
         try {
             Thread.sleep(200); // delays 1 second
         } catch (InterruptedException e) {
         }
     }
+    public void dealMyTimer(){
+        MyTimer timer = new MyTimer(gameController);
+    }
+    
 
     public void refillGrid() {
         Collections.sort(clearList);
@@ -105,7 +109,7 @@ public class Board {
             
         }
         clearList.removeAll(clearList);
-        gameController.repaintBoard();
+        gameController.repaintBoard(1);
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -124,7 +128,12 @@ public class Board {
         if(clearList.isEmpty()){
             return;
         }
-        gameController.repaintBoard();
+        dealMyTimer();
+        try {
+            Thread.sleep(700); // delays 1 second
+        } catch (InterruptedException e) {
+        }
+        gameController.repaintBoard(-9);
         try {
             Thread.sleep(200); // delays 1 second
         } catch (InterruptedException e) {
