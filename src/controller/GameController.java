@@ -8,6 +8,7 @@ import javax.swing.*;
 import model.*;
 import view.BoardView;
 import view.GameView;
+import view.GemView;
 
 public class GameController {
 	private GameView gameView = new GameView(this);
@@ -32,7 +33,7 @@ public class GameController {
 		return board.getSetButtonBorder(x, y);
 	}
 
-	public void boardPerformClick(GridBox source) {
+	public void boardPerformClick(GemView source) {
 		Gem sourceGem = board.getGem(source.getMyX(), source.getMyY());
 		board.performClick(sourceGem);
 	}
@@ -48,7 +49,6 @@ public class GameController {
 				try {
 					Thread.sleep(700);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				board.refillGrid();
@@ -56,24 +56,24 @@ public class GameController {
 		});
 	}
 
-	public void performCross(Gem a){
-		if(gameTask2 != null){
+	public void performCross(Gem a) {
+		if (gameTask2 != null) {
 			gameTask2.cancel(true);
 		}
-		gameTask2 = gameExecutor2.submit(new Runnable(){
-			public void run(){
+		gameTask2 = gameExecutor2.submit(new Runnable() {
+			public void run() {
 				board.clearCross(a);
 				board.dealMyTimer();
 				try {
 					Thread.sleep(700);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				board.refillGrid();
 			}
 		});
 	}
+
 	public boolean getRemoveFlag(int x, int y) {
 		return board.getRemoveFlag(x, y);
 	}
@@ -82,7 +82,7 @@ public class GameController {
 		gameView.repaintBoard(size);
 	}
 
-	public void updatePoint(){
+	public void updatePoint() {
 		gameView.updatePoint();
 	}
 }
