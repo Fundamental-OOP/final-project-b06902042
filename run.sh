@@ -1,3 +1,5 @@
+cd src 
+rm -rf *.class
 cd controller
 rm -rf *.class
 cd ..
@@ -6,6 +8,6 @@ rm -rf *.class
 cd ..
 cd view
 rm -rf *.class
-cd ..
-javac Main.java
-java Main
+cd ../..
+javac -cp src/ src/*.java
+java -cp src/ Main

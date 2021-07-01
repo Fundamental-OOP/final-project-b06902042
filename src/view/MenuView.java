@@ -28,18 +28,29 @@ public class MenuView extends JPanel implements ActionListener {
 		setBackground(new Color(88, 60, 100));
 
 		// title is set
-		JLabel title = new JLabel();
-		title.setBounds((getWidth() - 600) / 2, 20, 600, 250);
-		title.setIcon(new ImageIcon("logo.gif"));
-		add(title);
+		// JLabel title = new JLabel();
+		// title.setLayout(null);
+		// title.setBounds(0, 0, 880, 700);
+		// title.setIcon(new ImageIcon("logo.jpg"));
+		// add(title);
 
 		// buttons are set
 		start = new JButton();
-		start.setBounds((getWidth() - 350) / 2, 280, 350, 300);
-		start.setIcon(new ImageIcon("play.gif"));
+		start.setBounds((getWidth() - 350) / 2, 350, 350, 300);
+		start.setIcon(new ImageIcon("Images/play.png"));
 		start.setBorder(null);
 		start.addActionListener(this);
+		start.setLayout(null);
 		add(start);
+	}
+	public void paintComponent(Graphics g){
+		Image img = (new ImageIcon("Images/candy.jpg")).getImage();
+		g.drawImage(img,0,0,880,700,0,0 ,img.getWidth(null),img.getHeight(null),null);
+		repaint();
+	}
+	@Override
+	public boolean isOptimizedDrawingEnabled() {
+		return false;
 	}
 
 	public void actionPerformed(ActionEvent e) {
