@@ -48,7 +48,7 @@ public class BoardView extends JPanel implements ActionListener {
 		for (int x = 0; x < boardSize; x++) {
 			for (int y = 0; y < boardSize; y++) {
 				if (gameController.getRemoveFlag(x, y) == true) {
-					Image img = new ImageIcon("bomb.png").getImage();
+					Image img = new ImageIcon("Images/bomb.png").getImage();
 					Image newimg = img.getScaledInstance(size + 10, size + 10, java.awt.Image.SCALE_SMOOTH);
 					grid[x][y].setIcon(new ImageIcon(newimg));
 					//grid[x][y].setBounds(x * 50 + ((getWidth() - boardSize * 50) / 2), y * 50, 50, 50);

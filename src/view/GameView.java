@@ -30,6 +30,7 @@ public class GameView extends JFrame {
         container.setLayout(null);
         container.setBackground(Color.BLACK);
 
+        
         menuView = new MenuView(this.gameController);
         container.add(menuView);
         setVisible(true);
