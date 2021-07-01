@@ -6,20 +6,10 @@ import javax.swing.*;
 
 import controller.GameController;
 
-/**
- * This is the Menu class. It extends JPanel. It contains the basic elements of
- * the start screen at the beginning of the game.
- * 
- * @author Yemin Shou
- */
 public class MenuView extends JPanel implements ActionListener {
-	// private buttons
 	private JButton start;
 	private final GameController gameController;
 
-	/**
-	 * Constructor method builds Menu panel
-	 */
 	public MenuView(GameController gameController) {
 		super();
 		this.gameController = gameController;
@@ -27,14 +17,6 @@ public class MenuView extends JPanel implements ActionListener {
 		setBounds(0, 0, 880, 700);
 		setBackground(new Color(88, 60, 100));
 
-		// title is set
-		// JLabel title = new JLabel();
-		// title.setLayout(null);
-		// title.setBounds(0, 0, 880, 700);
-		// title.setIcon(new ImageIcon("logo.jpg"));
-		// add(title);
-
-		// buttons are set
 		start = new JButton();
 		start.setBounds((getWidth() - 350) / 2, 350, 350, 300);
 		start.setIcon(new ImageIcon("Images/play.png"));
@@ -43,11 +25,13 @@ public class MenuView extends JPanel implements ActionListener {
 		start.setLayout(null);
 		add(start);
 	}
-	public void paintComponent(Graphics g){
+
+	public void paintComponent(Graphics g) {
 		Image img = (new ImageIcon("Images/candy.jpg")).getImage();
-		g.drawImage(img,0,0,880,700,0,0 ,img.getWidth(null),img.getHeight(null),null);
+		g.drawImage(img, 0, 0, 880, 700, 0, 0, img.getWidth(null), img.getHeight(null), null);
 		repaint();
 	}
+
 	@Override
 	public boolean isOptimizedDrawingEnabled() {
 		return false;

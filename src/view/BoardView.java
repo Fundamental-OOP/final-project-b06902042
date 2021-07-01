@@ -3,15 +3,14 @@ package view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.awt.image.BufferedImage;
 import controller.GameController;
-import model.*;
 
 public class BoardView extends JPanel implements ActionListener {
 	private int boardSize = 10;
 	public int sizeVelocity = 0;
 	private GameController gameController;
-	private GridBox grid[][] = new GridBox[boardSize][boardSize];
+	private GemView grid[][] = new GemView[boardSize][boardSize];
+
 	public BoardView(GameController gameController) {
 		this.gameController = gameController;
 		setLayout(null);
@@ -19,7 +18,7 @@ public class BoardView extends JPanel implements ActionListener {
 		setBackground(Color.BLACK);
 		for (int x = 0; x < boardSize; x++) {
 			for (int y = 0; y < boardSize; y++) {
-				grid[x][y] = new GridBox();
+				grid[x][y] = new GemView();
 				grid[x][y].setBounds(x * 50 + ((getWidth() - boardSize * 50) / 2), y * 50, 50, 50);
 				grid[x][y].setMyXY(x, y);
 				grid[x][y].setIcon(new ImageIcon(gameController.getGridImagePath(x, y)));
@@ -51,7 +50,6 @@ public class BoardView extends JPanel implements ActionListener {
 					Image img = new ImageIcon("Images/bomb.png").getImage();
 					Image newimg = img.getScaledInstance(size + 10, size + 10, java.awt.Image.SCALE_SMOOTH);
 					grid[x][y].setIcon(new ImageIcon(newimg));
-					//grid[x][y].setBounds(x * 50 + ((getWidth() - boardSize * 50) / 2), y * 50, 50, 50);
 					grid[x][y].setBackground(Color.BLACK);
 					grid[x][y].setOpaque(true);
 					grid[x][y].setBorderPainted(false);
@@ -66,7 +64,7 @@ public class BoardView extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		GridBox source = (GridBox) e.getSource();
+		GemView source = (GemView) e.getSource();
 		gameController.boardPerformClick(source);
 		repaintBoard(0);
 	}
