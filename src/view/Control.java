@@ -64,18 +64,9 @@ public class Control extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object[] options = { "Restart", "Continue" };
 		if (e.getSource() == pauseButton) {
-<<<<<<< HEAD
-			 // if the timer is still on, then user will be prompted
-			int prompt = JOptionPane.showOptionDialog(null,
-						"Restart OR Continue",
-						"Restart", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]); // confirms that user wants to return to menu
-			if (prompt == 0) // if timer is not on, or if user said yes, then it will return to the menu
-			{ 
-=======
 			int prompt = JOptionPane.showOptionDialog(null, "Restart OR Continue", "Pause", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 			if (prompt == 0) {
->>>>>>> 8417103634f298a92ed0958fa5064072cab7046d
 				gameview.over(false);
 				Timer.on = false;
 			}
