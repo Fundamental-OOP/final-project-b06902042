@@ -10,7 +10,7 @@ public class GameView extends JFrame {
     private Control controlView;
     private MenuView menuView;
     private Timer timer;
-    static int points;
+    public static int points;
 
     public JLabel countdown;
     private final GameController gameController;
@@ -81,12 +81,18 @@ public class GameView extends JFrame {
 
     public void over() {
         Container container = getContentPane();
+        controlView.submitScore();
         container.removeAll();
         container.add(menuView);
+        new LeaderBoard();
         repaint();
     }
 
     public void repaintBoard(int size) {
         boardView.repaintBoard(size);
+    }
+
+    public void updatePoint(){
+        controlView.updatePoints();
     }
 }

@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import controller.GameController;
+import model.IO;
 
 /**
  * This is the Control class. It extends JPanel and implements ActionListener.
@@ -70,6 +71,21 @@ public class Control extends JPanel implements ActionListener {
 	 * Implemented from ActionListener This method will wait for an event to occur
 	 * (ex.button being pressed) and will react to that action occurring
 	 */
+
+	public void submitScore()
+	{
+		IO.openWriteFile("Highscore.txt");
+		String name = (String) JOptionPane.showInputDialog(null, "GAME OVER. \n You scored " + GameView.points + " points. \nSubmit your score into the leaderboard to compare with other players!\nEnter your name to submit your score:", 
+		"Submit Your Score", JOptionPane.PLAIN_MESSAGE, null, null, "John");	//opens dialog
+
+		if(name != null)
+		{
+			IO.writeln(name);
+			IO.writeln(GameView.points + "");
+		}
+		IO.closeWriteFile();
+	}
+
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == menuButton) {
 			int prompt = -1;
