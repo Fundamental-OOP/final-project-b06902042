@@ -2,7 +2,7 @@ package model;
 
 import java.util.*;
 
-public abstract class Gem {
+public abstract class Gem implements Comparable<Gem>{
     public enum Colour {
         BLUE, GREEN, ORANGE, PURPLE, RED, WHITE, YELLOW
     }
@@ -62,5 +62,9 @@ public abstract class Gem {
                 || (this.X == gem.getMyX() && this.Y == gem.getMyY() + 1)
                 || (this.X == gem.getMyX() + 1 && this.Y == gem.getMyY())
                 || (this.X == gem.getMyX() - 1 && this.Y == gem.getMyY()));
+    }
+    @Override
+    public int compareTo(Gem gem){
+        return Y - gem.getMyY();
     }
 }

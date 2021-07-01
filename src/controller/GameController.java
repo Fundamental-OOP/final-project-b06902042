@@ -56,4 +56,8 @@ public class GameController {
 	public void repaintBoard() {
 		gameView.repaintBoard();
 	}
+
+	public void updatePoint(){
+		gameView.updatePoint();
+	}
 }

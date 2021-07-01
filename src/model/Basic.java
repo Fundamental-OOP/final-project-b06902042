@@ -2,7 +2,7 @@ package model;
 
 import java.util.*;
 
-public class Basic extends Gem {
+public class Basic extends Gem{
     public Basic() {
         setColour();
     }
@@ -44,4 +44,5 @@ public class Basic extends Gem {
     public ArrayList<ArrayList<Integer>> useEffect() {
         return new ArrayList<ArrayList<Integer>>();
     }
+
 }

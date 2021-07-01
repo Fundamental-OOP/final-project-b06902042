@@ -3,6 +3,7 @@ package model;
 import java.util.*;
 import controller.*;
 import model.Gem.Colour;
+import view.GameView;
 
 public class Board {
     private final int boardSize = 10;
@@ -90,7 +91,9 @@ public class Board {
     }
 
     public void refillGrid() {
+        Collections.sort(clearList);
         for (Gem gem : clearList) {
+            System.out.println(gem.getMyY());
             gem.setRemoveFlag(false);
             int x = gem.getMyX();
             for(int i = gem.getMyY();i > 0;i--){
@@ -205,6 +208,8 @@ public class Board {
             for (Gem gem : clearListTmp) {
                 gem.setRemoveFlag(true);
             }
+            GameView.points += clearListTmp.size() * 100;
+            gameController.updatePoint();
             clearList.addAll(clearListTmp);
             //effectList.addAll(effectListTmp);
         } else {

@@ -2,12 +2,12 @@ package model;
 
 import java.util.*;
 
-public class Test extends Gem {
+public class Test extends Gem{
     public Test() {
         setColour();
     }
     public void setColour(Colour color){
-        
+
     }
     public void setColour() {
         this.colour = Colour.values()[new Random().nextInt(7)];
